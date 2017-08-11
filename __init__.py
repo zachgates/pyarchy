@@ -12,3 +12,6 @@ __all__ = [
     'mechanical',
     'utils',
 ]
+
+for module in __all__:
+    __import__('pyarchy.%s' % module)
