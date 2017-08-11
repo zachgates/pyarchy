@@ -52,19 +52,19 @@ class Conditional(object, metaclass = __MetaConditional):
         """
         The status of the condition.
         """
-        return bool(self.__conditional_func())
+        return bool(self.__condition_func())
 
     @property
     def condition(self):
         """
         A callable object.
         """
-        return self.__conditional_func
+        return self.__condition_func
 
     @condition.setter
     @utils.strict_arg('func', types.FunctionType)
     def condition(self, func):
-        self.__conditional_func = func
+        self.__condition_func = func
 
 
 __all__ = [

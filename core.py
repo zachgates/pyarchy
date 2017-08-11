@@ -25,8 +25,8 @@ class ObjectPool(Object):
     object_type = Object
 
     def __init__(self, *objs):
-        self.__readonly = False
-        self.__protected = False
+        self.readonly = False
+        self.protected = False
         self.__objects = set(o for o in objs if isinstance(e, Object))
 
     def __str__(self):
