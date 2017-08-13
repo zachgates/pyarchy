@@ -7,6 +7,9 @@ def raise_type_error(arg_name, correct_type):
     """
     Raise a template TypeError.
     """
+    if isinstance(correct_type, (tuple, list)):
+        correct_type = ' or '.join(str(e) for e in correct_type)
+
     raise TypeError("'%s' must be of type %s" % (
                     arg_name,
                     correct_type))
@@ -32,13 +35,13 @@ def strict_arg(arg_name, arg_types, inner_types=()):
             if len(args) > arg_index:
                 arg = args[arg_index]
                 if not isinstance(arg, arg_types):
-                    raise_type_error(arg_name, type(arg))
+                    raise_type_error(arg_name, arg_types)
             else:
                 if arg_name in kwargs:
                     arg = kwargs[arg_name]
 
                     if not isinstance(arg, arg_types):
-                        raise_type_error(arg_name, type(arg))
+                        raise_type_error(arg_name, arg_types)
                     elif inner_types and isinstance(arg, (tuple, list)):
                         if any(not isinstance(v, inner_types) for v in arg):
                             raise_type_error(arg_name, '[%s]' % type(arg))
