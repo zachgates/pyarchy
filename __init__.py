@@ -8,6 +8,7 @@ __email__ = 'thezachgates@gmail.com'
 __all__ = [
     'common',
     'core',
+    'events',
     'mechanical',
     'meta',
     'utils',
