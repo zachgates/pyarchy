@@ -3,6 +3,7 @@ Container for the most basic Object types.
 """
 
 
+import re
 import types
 import uuid
 
