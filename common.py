@@ -25,14 +25,14 @@ class TimedObject(Object):
 
     def __lt__(self, obj):
         if isinstance(obj, TimedObject):
-            return self.__timestamp < obj.timestamp
+            return self.timestamp < obj.timestamp
         else:
             # Don't support comparisions with other types.
             return NotImplemented
 
     def __gt__(self, obj):
         if isinstance(obj, TimedObject):
-            return self.__timestamp > obj.timestamp
+            return self.timestamp > obj.timestamp
         else:
             # Don't support comparisions with other types.
             return NotImplemented

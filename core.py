@@ -6,8 +6,8 @@ Container for the most basic Object types.
 import types
 import uuid
 
-from . import utils
 from .meta import MetaConditional
+from .utils import strict_arg
 
 
 class Object(object):
@@ -62,7 +62,7 @@ class ObjectPool(Object):
         return self.__protected
 
     @protected.setter
-    @utils.strict_arg('mode', bool)
+    @strict_arg('mode', bool)
     def protected(self, mode: bool):
         self.__protected = mode
 
@@ -86,7 +86,7 @@ class ObjectPool(Object):
         return self.__readonly
 
     @readonly.setter
-    @utils.strict_arg('mode', bool)
+    @strict_arg('mode', bool)
     def readonly(self, mode):
         self.__readonly = mode
 
@@ -102,7 +102,7 @@ class ObjectPool(Object):
         return wrapper
 
     @protect_objects
-    @utils.strict_arg('func', types.FunctionType)
+    @strict_arg('func', types.FunctionType)
     def map(self, func: types.FunctionType):
         """
         Apply a function to all objects in the pool.
@@ -113,7 +113,7 @@ class ObjectPool(Object):
             for o in self:
                 func(o)
 
-    @utils.strict_arg('func', types.FunctionType)
+    @strict_arg('func', types.FunctionType)
     def filter(self, func: types.FunctionType):
         """
         Return a subset of the pool where only an object, o, where func(o) is
