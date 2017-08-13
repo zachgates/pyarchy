@@ -5,8 +5,7 @@ Container for some common Object types.
 
 import time
 
-from . import utils
-from .core import Object, IdentifiedObject
+from .core import Object, IdentifiedObject, NamedObject
 
 
 class TimedObject(Object):
@@ -46,54 +45,9 @@ class TimedObject(Object):
         return self.__timestamp
 
 
-class NamedObject(Object):
-    """
-    An Object with a name.
-    """
-
-    def __init__(self, name):
-        Object.__init__(self)
-
-        if self.check_name(name):
-            self.__name = name
-        else:
-            raise TypeError('name must be alphanumeric')
-
-    def __str__(self):
-        return self.__name
-
-    def __repr__(self):
-        return "NamedObject('%s')" % self.__name
-
-    @staticmethod
-    @utils.strict_arg('name', str)
-    def check_name(name: str) -> bool:
-        """
-        Validate the provided name.
-        """
-        return name.isalnum()
-
-    @property
-    def name(self) -> str:
-        """
-        The name of the object.
-        """
-        return self.__name
-
-    @name.setter
-    def name(self, name):
-        """
-        The setter for the name property.
-        """
-        if self.check_name(name):
-            self.__name = name
-        else:
-            raise TypeError("got invalid name: '%s'" % name)
-
-
 class StrictlyNamedObject(NamedObject):
     """
-    An object with an constant name defined at instantiation.
+    A NamedObject with an constant name defined at instantiation.
     """
 
     def __str__(self):
@@ -110,9 +64,9 @@ class StrictlyNamedObject(NamedObject):
         raise UserWarning("cannot change object's name")
 
 
-class ClassicObject(IdentifiedObject, TimedObject, NamedObject):
+class ClassicObject(IdentifiedObject, TimedObject, StrictlyNamedObject):
     """
-    The base class for most objects.
+    An Object with an ID, timestamp, and constant name.
     """
 
     def __init__(self, name):
@@ -129,7 +83,6 @@ class ClassicObject(IdentifiedObject, TimedObject, NamedObject):
 
 __all__ = [
     TimedObject,
-    NamedObject,
     StrictlyNamedObject,
     ClassicObject,
 ]

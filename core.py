@@ -212,6 +212,51 @@ class IdentifiedObject(Object):
         return self.__id.hex
 
 
+class NamedObject(Object):
+    """
+    An Object with a name.
+    """
+
+    def __init__(self, name):
+        Object.__init__(self)
+
+        if self.check_name(name):
+            self.__name = name
+        else:
+            raise TypeError('name must be alphanumeric')
+
+    def __str__(self):
+        return self.__name
+
+    def __repr__(self):
+        return "NamedObject('%s')" % self.__name
+
+    @staticmethod
+    @strict_arg('name', str)
+    def check_name(name: str) -> bool:
+        """
+        Validate the provided name.
+        """
+        return bool(re.fullmatch('^[\w\d_]+|', name))
+
+    @property
+    def name(self) -> str:
+        """
+        The name of the object.
+        """
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        """
+        The setter for the name property.
+        """
+        if self.check_name(name):
+            self.__name = name
+        else:
+            raise TypeError("got invalid name: '%s'" % name)
+
+
 class ConditionalObject(Object, metaclass = MetaConditional):
     """
     An object that requires a condition to be True to call its functions.
@@ -243,5 +288,6 @@ __all__ = [
     ObjectPool,
     Identity,
     IdentifiedObject,
+    NamedObject,
     ConditionalObject,
 ]
