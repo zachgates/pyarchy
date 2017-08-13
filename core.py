@@ -39,10 +39,18 @@ class ObjectPool(Object):
 
     def __iter__(self):
         """
-        The iterator for the pool. Can be overridden by subclasses.
+        A list of the objects in the pool. Can be overridden by subclasses.
         """
-        for o in self.__objects:
-            yield o
+        return list(self.__objects)
+
+    def __reversed__(self):
+        """
+        A list of the objects in the pool, in reverse.
+        """
+        return self[::-1]
+
+    def __getitem__(self, idx):
+        return list(self)[idx]
 
     def __len__(self):
         return len(self.__objects)
