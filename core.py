@@ -7,6 +7,7 @@ import types
 import uuid
 
 from . import utils
+from .meta import MetaConditional
 
 
 class Object(object):
@@ -211,9 +212,36 @@ class IdentifiedObject(Object):
         return self.__id.hex
 
 
+class ConditionalObject(Object, metaclass = MetaConditional):
+    """
+    An object that requires a condition to be True to call its functions.
+    """
+
+    @property
+    def _condition(self):
+        return self.__condition
+
+    @_condition.setter
+    @strict_arg('func', types.FunctionType)
+    def _condition(self, func):
+        self.__condition = func
+
+    def __init__(self, func: types.FunctionType):
+        Object.__init__(self)
+        self.__condition = func
+
+    @property
+    def status(self):
+        """
+        The status of the condition.
+        """
+        return bool(self.__condition(self))
+
+
 __all__ = [
     Object,
     ObjectPool,
     Identity,
     IdentifiedObject,
+    ConditionalObject,
 ]
