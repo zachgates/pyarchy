@@ -79,10 +79,10 @@ class RotarySwitch(StateObject):
 
     state_types = (int,)
 
-    def __init__(self, intervals=0, wrapping=False):
-        assert intervals >= 0
+    def __init__(self, num_positions=0, wrapping=False):
+        assert num_positions >= 0
 
-        self.__range = range(0, intervals + 1) or [0]
+        self.__range = range(0, num_positions + 1) or [0]
         self.__wrapping = wrapping
 
         StateObject.__init__(self, 0)
