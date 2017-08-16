@@ -24,6 +24,9 @@ class MetaConditional(MetaNamedObject):
     """
     A metaclass for any object that requires that a function returns True to
     call its functions.
+
+    Note: MetaConditional is a subclass of MetaNamedObject only to pacify the
+    metaclass conflict we get in the Event class.
     """
 
     @classmethod

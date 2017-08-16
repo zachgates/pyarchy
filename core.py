@@ -7,7 +7,7 @@ import re
 import types
 import uuid
 
-from .meta import MetaConditional
+from .meta import MetaNamedObject, MetaConditional
 from .utils import strict_arg
 
 
@@ -221,7 +221,7 @@ class IdentifiedObject(Object):
         return self.__id.hex
 
 
-class NamedObject(Object):
+class NamedObject(Object, metaclass = MetaNamedObject):
     """
     An Object with a name.
     """
