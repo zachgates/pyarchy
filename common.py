@@ -56,12 +56,12 @@ class StrictlyNamedObject(NamedObject):
     def __repr__(self):
         return "StrictlyNamedObject('%s')" % self.__name
 
-    @NamedObject.name.setter
-    def name(self, name):
+    @property
+    def name(self) -> str:
         """
-        Blocker for the NamedObject setter.
+        The name of the object.
         """
-        raise UserWarning("cannot change object's name")
+        return self.__name
 
 
 class ClassicObject(IdentifiedObject, TimedObject, StrictlyNamedObject):
