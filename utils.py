@@ -3,7 +3,19 @@ Container for useful functions.
 """
 
 
-def raise_type_error(arg_name, correct_type):
+import copy
+import types
+
+
+def make_deep_copy(object_, n=1) -> list:
+    """
+    Return n deepcopies of the object
+    """
+    assert n > 0
+    return [copy.deepcopy(object_) for _ in range(n)]
+
+
+def raise_type_error(arg_name: str, correct_type: (tuple, list)):
     """
     Raise a template TypeError.
     """
@@ -13,6 +25,18 @@ def raise_type_error(arg_name, correct_type):
     raise TypeError("'%s' must be of type %s" % (
                     arg_name,
                     correct_type))
+
+
+def raise_key_index_error(key, exists: bool = False):
+    """
+    Raises key exists/does not exist errors.
+    """
+    if exists:
+        msg = 'key already exists: '
+    else:
+        msg = 'key does not exist: '
+
+    raise IndexError(msg + str(key))
 
 
 class StrictArg(object):
@@ -82,7 +106,9 @@ class StrictArg(object):
 
 
 __all__ = [
+    make_deep_copy,
     raise_type_error,
+    raise_key_index_error,
 
     StrictArg,
 ]
