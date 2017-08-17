@@ -5,7 +5,7 @@ Container for Event Objects.
 
 from .common import ClassicObject, StrictlyNamedObject
 from .core import ObjectPool, ConditionalObject
-from .utils import strict_arg
+from .utils import StrictArg
 
 
 class Event(ClassicObject, ConditionalObject):
@@ -52,7 +52,7 @@ class Event(ClassicObject, ConditionalObject):
         return self.__permitted
 
     @permitted.setter
-    @strict_arg('mode', bool)
+    @StrictArg('mode', bool)
     def permitted(self, mode: bool):
         self.__permitted = mode
 

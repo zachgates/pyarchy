@@ -8,7 +8,7 @@ import types
 import uuid
 
 from .meta import MetaNamedObject, MetaConditional
-from .utils import strict_arg
+from .utils import StrictArg
 
 
 class Object(object):
@@ -71,7 +71,7 @@ class ObjectPool(Object):
         return self.__protected
 
     @protected.setter
-    @strict_arg('mode', bool)
+    @StrictArg('mode', bool)
     def protected(self, mode: bool):
         self.__protected = mode
 
@@ -95,7 +95,7 @@ class ObjectPool(Object):
         return self.__readonly
 
     @readonly.setter
-    @strict_arg('mode', bool)
+    @StrictArg('mode', bool)
     def readonly(self, mode):
         self.__readonly = mode
 
@@ -111,7 +111,7 @@ class ObjectPool(Object):
         return wrapper
 
     @protect_objects
-    @strict_arg('func', types.FunctionType)
+    @StrictArg('func', types.FunctionType)
     def map(self, func: types.FunctionType):
         """
         Apply a function to all objects in the pool.
@@ -122,7 +122,7 @@ class ObjectPool(Object):
             for o in self:
                 func(o)
 
-    @strict_arg('func', types.FunctionType)
+    @StrictArg('func', types.FunctionType)
     def filter(self, func: types.FunctionType):
         """
         Return a subset of the pool where only an object, o, where func(o) is
@@ -241,7 +241,7 @@ class NamedObject(Object, metaclass = MetaNamedObject):
         return "NamedObject('%s')" % self.__name
 
     @staticmethod
-    @strict_arg('name', str)
+    @StrictArg('name', str)
     def check_name(name: str) -> bool:
         """
         Validate the provided name.
@@ -276,7 +276,7 @@ class ConditionalObject(Object, metaclass = MetaConditional):
         return self.__condition
 
     @_condition.setter
-    @strict_arg('func', types.FunctionType)
+    @StrictArg('func', types.FunctionType)
     def _condition(self, func):
         self.__condition = func
 
