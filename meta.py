@@ -6,7 +6,16 @@ Container for metaclasses.
 import types
 
 
-class MetaSingleton(type):
+class MetaNamedObject(type):
+    """
+    A metaclass for any object whose name can be set at the class level.
+    """
+
+    _name = None
+    name = property(lambda cls: cls._name)
+
+
+class MetaSingleton(MetaNamedObject):
     """
     A metaclass for any class that should make only one instance.
     """
@@ -18,15 +27,6 @@ class MetaSingleton(type):
             cls.__instance = super(MetaSingleton, cls).__call__(*args, **kwargs)
 
         return cls.__instance
-
-
-class MetaNamedObject(type):
-    """
-    A metaclass for any object whose name can be set at the class level.
-    """
-
-    _name = None
-    name = property(lambda cls: cls._name)
 
 
 class MetaConditional(MetaNamedObject):
@@ -88,7 +88,7 @@ class MetaConditional(MetaNamedObject):
 
 
 __all__ = [
-    MetaSingleton,
     MetaNamedObject,
+    MetaSingleton,
     MetaConditional,
 ]

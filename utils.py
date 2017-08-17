@@ -63,7 +63,7 @@ class StrictArg(object):
             if isinstance(self.__func, type):
                 args.insert(0, self.__func)
 
-            for arg, arg_name in zip(args, self.__arg_names):
+            for arg, arg_name in zip(args, self._arg_names):
                 if arg_name == self.__name:
                     if isinstance(arg, self.__types):
                         return self.__func(*args, **kwargs)

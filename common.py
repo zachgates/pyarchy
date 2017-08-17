@@ -45,16 +45,14 @@ class TimedObject(Object):
         return self.__timestamp
 
 
-class StrictlyNamedObject(NamedObject):
+class StrictlyNamedObject(Object):
     """
-    A NamedObject with an constant name defined at instantiation.
+    A NamedObject with a constant name defined at instantiation.
     """
 
-    def __str__(self):
-        return self.__name
-
-    def __repr__(self):
-        return "StrictlyNamedObject('%s')" % self.__name
+    def __init__(self, name):
+        Object.__init__(self)
+        self.__name = name
 
     @property
     def name(self) -> str:
@@ -72,7 +70,7 @@ class ClassicObject(IdentifiedObject, TimedObject, StrictlyNamedObject):
     def __init__(self, name):
         IdentifiedObject.__init__(self)
         TimedObject.__init__(self)
-        NamedObject.__init__(self, name)
+        StrictlyNamedObject.__init__(self, name)
 
     def __str__(self):
         return self.name
