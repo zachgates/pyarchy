@@ -5,7 +5,19 @@ Container for metaclasses.
 
 import types
 
-from .utils import strict_arg
+
+class MetaSingleton(type):
+    """
+    A metaclass for any class that should make only one instance.
+    """
+
+    __instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if not cls.__instance:
+            cls.__instance = super(MetaSingleton, cls).__call__(*args, **kwargs)
+
+        return cls.__instance
 
 
 class MetaNamedObject(type):
@@ -14,10 +26,7 @@ class MetaNamedObject(type):
     """
 
     _name = None
-
-    @property
-    def name(self):
-        return self._name
+    name = property(lambda cls: cls._name)
 
 
 class MetaConditional(MetaNamedObject):
@@ -30,7 +39,7 @@ class MetaConditional(MetaNamedObject):
     """
 
     @classmethod
-    def status_checker(cls, func):
+    def status_checker(cls, func: types.FunctionType):
         """
         A decorator for functions that require the status attribute to be
         True for the function to be executed.
@@ -79,6 +88,7 @@ class MetaConditional(MetaNamedObject):
 
 
 __all__ = [
+    MetaSingleton,
     MetaNamedObject,
     MetaConditional,
 ]
