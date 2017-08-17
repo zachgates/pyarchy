@@ -4,8 +4,9 @@ Container for Event Objects.
 
 
 from .common import ClassicObject, StrictlyNamedObject
-from .core import ObjectPool, ConditionalObject
-from .utils import StrictArg
+from .core import ConditionalObject
+from .data import ItemPool
+from .utils import raise_type_error, StrictArg
 
 
 class Event(ClassicObject, ConditionalObject):
@@ -57,7 +58,7 @@ class Event(ClassicObject, ConditionalObject):
         self.__permitted = mode
 
 
-class EventPool(ObjectPool, StrictlyNamedObject):
+class EventPool(ItemPool, StrictlyNamedObject):
 
     object_type = Event
 
@@ -65,17 +66,14 @@ class EventPool(ObjectPool, StrictlyNamedObject):
         if any(not isinstance(e, Event) for e in events):
             raise_type_error('events', Event)
 
-        ObjectPool.__init__(self, *events)
+        ItemPool.__init__(self, *events)
         StrictlyNamedObject.__init__(self, name)
-
-    def __str__(self):
-        return 'EventPool(%i)' % len(self.__events)
 
     def __iter__(self):
         """
         Yield the events in the pool in order of creation (newest first).
         """
-        objs = ObjectPool.__iter__(self)
+        objs = ItemPool.__iter__(self)
 
         for e in sorted(objs, reverse=True):
             yield e
