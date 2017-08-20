@@ -78,7 +78,7 @@ class EventPool(ItemPool, StrictlyNamedObject):
         for e in sorted(objs, reverse=True):
             yield e
 
-    def create(self, name, *args):
+    def create(self, name, args):
         event = Event._handlers[name](*args)
         self.add(event)
         return event
