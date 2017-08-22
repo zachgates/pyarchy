@@ -180,10 +180,7 @@ class ItemPool(object):
         Return a subset of the pool where only an object, o, where func(o) is
         True is included.
         """
-        if func(Object(dummy=True)) is not None:
-            raise UserWarning('cannot modify elements with filter')
-        else:
-            return ObjectPool(*filter(func, self))
+        return type(self)(*filter(func, self))
 
     @protect_objects
     def add(self, obj: object):
