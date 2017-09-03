@@ -29,18 +29,18 @@ class HardKeySet(object):
             raise_key_index_error(key)
 
     def __setitem__(self, key, value):
-        for id_, (k, v) in self.__items.items():
-            if id_ == id(key):
-                del self.__items[id_]
-                break
-
-        self.__items[id(key)] = (make_deep_copy(key), make_deep_copy(value))
+        if id(key) in self.__items.keys():
+            raise KeyError('keys can only be set once')
+        else:
+            self.__items[id(key)] = (
+                make_deep_copy(key),
+                make_deep_copy(value),
+            )
 
     def __delitem__(self, key):
         for id_, (k, v) in self.__items.items():
             if id_ == id(key):
-                del self.__items[id_]
-                break
+                raise KeyError('keys cannot be removed')
         else:
             raise_key_index_error(key)
 
@@ -59,7 +59,7 @@ class HardKeySet(object):
 
     def add(self, key, value):
         self.__setitem__(key, value)
-        return 
+        return (key, value)
 
     def remove(self, key):
         self.__delitem__(key)

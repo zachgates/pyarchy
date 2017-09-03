@@ -7,7 +7,7 @@ import copy
 import types
 
 
-def make_deep_copy(object_, n=1) -> list:
+def make_deep_copy(object_, n = 1) -> list:
     """
     Return n deepcopies of the object
     """
