@@ -67,8 +67,8 @@ class ClassicObject(IdentifiedObject, TimedObject, StrictlyNamedObject):
     An Object with an ID, timestamp, and constant name.
     """
 
-    def __init__(self, name):
-        IdentifiedObject.__init__(self)
+    def __init__(self, name, rand_id = True):
+        IdentifiedObject.__init__(self, rand_id = bool(rand_id))
         TimedObject.__init__(self)
         StrictlyNamedObject.__init__(self, name)
 

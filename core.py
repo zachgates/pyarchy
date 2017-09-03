@@ -28,9 +28,13 @@ class Identity(Object, uuid.UUID):
     A UUID Object.
     """
 
-    def __init__(self):
+    def __init__(self, hex_ = None):
         Object.__init__(self)
-        uuid.UUID.__init__(self, uuid.uuid4().hex)
+
+        if hex_ is None:
+            uuid.UUID.__init__(self, uuid.uuid4().hex)
+        else:
+            uuid.UUID.__init__(self, hex_)
 
 
 class IdentifiedObject(Object):
@@ -38,19 +42,36 @@ class IdentifiedObject(Object):
     An object with an ID.
     """
 
-    def __init__(self):
+    def __init__(self, rand_id = True):
         Object.__init__(self)
-        self.__id = Identity()
+
+        if rand_id:
+            self.__id = Identity()
+        else:
+            self.__id = None
 
     def __str__(self):
         return self.id
 
     @property
-    def id(self):
+    def id(self) -> str:
         """
         The object's UUID as a hex string.
         """
-        return self.__id.hex
+        if self.__id:
+            return self.__id.hex
+        else:
+            return None
+
+    @id.setter
+    def id(self, id_ : Identity):
+        if self.__id is None:
+            if isinstance(id_, Identity):
+                self.__id = id_
+            else:
+                raise AttributeError('id must be an Identity')
+        else:
+            raise AttributeError('id can only be set once')
 
 
 class NamedObject(Object, metaclass = MetaNamedObject):
