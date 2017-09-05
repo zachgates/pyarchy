@@ -16,7 +16,7 @@ REQUIRED = [
 
 main_dir = os.path.abspath(os.path.dirname(__file__))
 
-with io.open(os.path.join(main_dir, 'README.rst'), encoding = 'utf-8') as f:
+with io.open(os.path.join(main_dir, 'README.md'), encoding = 'utf-8') as f:
     README = f.readlines()
 
 NAME = README[0][2:-1]
