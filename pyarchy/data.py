@@ -175,6 +175,18 @@ class ItemPool(object):
                 func(o)
 
     @StrictArg('func', types.FunctionType)
+    def get(self, func: types.FunctionType):
+        """
+        Return the first item for which the supplied function returns True.
+        A KeyError is raised if no item matches.
+        """
+        for o in self:
+            if func(o):
+                return o
+
+        raise KeyError('no matching object found')
+
+    @StrictArg('func', types.FunctionType)
     def filter(self, func: types.FunctionType):
         """
         Return a subset of the pool where only an object, o, where func(o) is
