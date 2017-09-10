@@ -79,7 +79,7 @@ class ItemPool(object):
     def __init__(self, *objs):
         self.readonly = False
         self.protected = False
-        self.__objects = set(o for o in objs if isinstance(e, self.object_type))
+        self.__objects = set(o for o in objs if isinstance(o, self.object_type))
 
     def __str__(self):
         return repr(self)
