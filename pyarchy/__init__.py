@@ -1,4 +1,4 @@
-__version__ = '1.1.9'
+__version__ = '1.2.0'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (C) 2017 Zach Gates'
 

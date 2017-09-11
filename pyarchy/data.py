@@ -77,8 +77,8 @@ class ItemPool(object):
     object_type = object
 
     def __init__(self, *objs):
-        self.readonly = False
-        self.protected = False
+        self.__readonly = False
+        self.__protected = False
         self.__objects = set(o for o in objs if isinstance(o, self.object_type))
 
     def __str__(self):
@@ -174,14 +174,16 @@ class ItemPool(object):
             for o in self:
                 func(o)
 
-    @StrictArg('func', types.FunctionType)
-    def get(self, func: types.FunctionType):
+    def get(self, **kwargs):
         """
-        Return the first item for which the supplied function returns True.
-        A KeyError is raised if no item matches.
+        Return the first item for which the supplied keywords match the item's
+        attributes. Raises a KeyError if the pool is empty.
         """
         for o in self:
-            if func(o):
+            for kw, val in kwargs.items():
+                if not hasattr(o, kw) or getattr(o, kw) != val:
+                    break
+            else:
                 return o
 
         raise KeyError('no matching object found')
