@@ -211,10 +211,10 @@ class ItemPool(object):
         """
         Add to the pool all objects in the provided pool.
         """
-        if self.strict and any(not isinstance(p, self.__class__) for p in pools):
+        if any(not isinstance(p, self.__class__) for p in pools):
             raise TypeError('pools must be of same type')
         else:
-            self.__objects.update(*(pool.objects for pool in pools))
+            self.__objects.update(*pools)
 
     def remove(self, obj: object):
         """
