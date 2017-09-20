@@ -41,7 +41,7 @@ class MetaConditional(MetaNamedObject):
     @classmethod
     def status_checker(cls, func: types.FunctionType):
         """
-        A decorator for functions that require the status attribute to be
+        A decorator for functions that require the condition attribute to be
         True for the function to be executed.
         """
         def func_wrapper(self, *args, **kwargs):
